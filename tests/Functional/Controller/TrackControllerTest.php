@@ -25,10 +25,7 @@ class TrackControllerTest extends WebTestCase
 
     public function testUpdatePriceSuccess(): void
     {
-        $track = new Track();
-        $track->setTitle('Track 1');
-        $track->setArtist('Artist 1');
-        $track->setPrice('10.00');
+        $track = new Track('Track 1', 'Artist 1', '10.00');
 
         $this->entityManager->persist($track);
         $this->entityManager->flush();
@@ -56,10 +53,7 @@ class TrackControllerTest extends WebTestCase
 
     public function testUpdatePriceReturnsValidationErrorsWhenPayloadInvalid(): void
     {
-        $track = new Track();
-        $track->setTitle('Track 1');
-        $track->setArtist('Artist 1');
-        $track->setPrice('10.00');
+        $track = new Track('Track 1', 'Artist 1', '10.00');
 
         $this->entityManager->persist($track);
         $this->entityManager->flush();

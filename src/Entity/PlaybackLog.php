@@ -12,36 +12,43 @@ class PlaybackLog
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\ManyToOne(inversedBy: 'playbackLogs')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Track $track = null;
+    private Track $track;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $playedAt = null;
+    private \DateTimeImmutable $playedAt;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?string $amountPaid = null;
+    private string $amountPaid;
+
+    public function __construct(Track $track, \DateTimeImmutable  $playedAt, string $amountPaid)
+    {
+        $this->track = $track;
+        $this->playedAt = $playedAt;
+        $this->amountPaid = $amountPaid;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTrack(): ?Track
+    public function getTrack(): Track
     {
         return $this->track;
     }
 
-    public function setTrack(?Track $track): static
+    public function setTrack(Track $track): static
     {
         $this->track = $track;
 
         return $this;
     }
 
-    public function getPlayedAt(): ?\DateTimeImmutable
+    public function getPlayedAt(): \DateTimeImmutable
     {
         return $this->playedAt;
     }
@@ -53,7 +60,7 @@ class PlaybackLog
         return $this;
     }
 
-    public function getAmountPaid(): ?string
+    public function getAmountPaid(): string
     {
         return $this->amountPaid;
     }

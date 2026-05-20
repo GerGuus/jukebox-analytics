@@ -10,11 +10,20 @@ class TopTrackStatsResponseDto
     ) {
     }
 
-    public static function fromArray(array $data): self
+
+    public static function fromRecord(array $row): self
     {
         return new self(
-            $data['title'],
-            (int) $data['playbacks_count'],
+            $row['title'],
+            (int) $row['playbacks_count'],
+        );
+    }
+
+    public static function fromArray(array $rows): array
+    {
+        return array_map(
+            static fn (array $row): self => self::fromRecord($row),
+            $rows
         );
     }
 }

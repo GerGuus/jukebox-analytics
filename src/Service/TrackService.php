@@ -4,13 +4,11 @@ namespace App\Service;
 
 use App\Entity\Track;
 use App\Repository\TrackRepository;
-use Doctrine\ORM\EntityManagerInterface;
 
 class TrackService
 {
     public function __construct(
         private readonly TrackRepository $trackRepository,
-        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -24,7 +22,7 @@ class TrackService
 
         $track->setPrice($newPrice);
 
-        $this->entityManager->flush();
+        $this->trackRepository->save($track);
 
         return $track;
     }

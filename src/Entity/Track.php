@@ -14,16 +14,16 @@ class Track
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    private string $title;
 
     #[ORM\Column(length: 255)]
-    private ?string $artist = null;
+    private string $artist;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?string $price = null;
+    private string $price;
 
     /**
      * @var Collection<int, PlaybackLog>
@@ -31,17 +31,20 @@ class Track
     #[ORM\OneToMany(targetEntity: PlaybackLog::class, mappedBy: 'track')]
     private Collection $playbackLogs;
 
-    public function __construct()
+    public function __construct(string $title, string $artist, string $price)
     {
+        $this->title = $title;
+        $this->artist = $artist;
+        $this->price = $price;
         $this->playbackLogs = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -53,7 +56,7 @@ class Track
         return $this;
     }
 
-    public function getArtist(): ?string
+    public function getArtist(): string
     {
         return $this->artist;
     }
@@ -65,7 +68,7 @@ class Track
         return $this;
     }
 
-    public function getPrice(): ?string
+    public function getPrice(): string
     {
         return $this->price;
     }

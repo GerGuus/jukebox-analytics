@@ -23,10 +23,7 @@ class PlaybackLogService
             throw new \RuntimeException('Track not found');
         }
 
-        $log = new PlaybackLog();
-        $log->setTrack($track);
-        $log->setPlayedAt(new \DateTimeImmutable());
-        $log->setAmountPaid($amountPaid);
+        $log = new PlaybackLog($track, new \DateTimeImmutable(), $amountPaid);
 
         $this->playbackLogRepository->save($log);
 

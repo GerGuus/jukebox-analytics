@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\DTO\Response\TopTrackStatsResponseDto;
 use App\Repository\PlaybackLogRepository;
 
 class StatsService
@@ -13,6 +14,8 @@ class StatsService
 
     public function getTopTracks(int $limit = 3): array
     {
-        return $this->playbackLogRepository->findTopTracks($limit);
+        $rows = $this->playbackLogRepository->findTopTracks($limit);
+
+        return TopTrackStatsResponseDto::fromArray($rows);
     }
 }

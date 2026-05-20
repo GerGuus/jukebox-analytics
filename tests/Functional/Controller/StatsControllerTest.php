@@ -26,20 +26,11 @@ class StatsControllerTest extends WebTestCase
 
     public function testTopReturnsTracksOrderedByPlaybackCount(): void
     {
-        $track1 = new Track();
-        $track1->setTitle('Track A');
-        $track1->setArtist('Artist A');
-        $track1->setPrice('10.00');
+        $track1 = new Track('Track A', 'Test A', '10.00');
 
-        $track2 = new Track();
-        $track2->setTitle('Track B');
-        $track2->setArtist('Artist B');
-        $track2->setPrice('20.00');
+        $track2 = new Track('Track B', 'Test B', '20.00');
 
-        $track3 = new Track();
-        $track3->setTitle('Track C');
-        $track3->setArtist('Artist C');
-        $track3->setPrice('30.00');
+        $track3 = new Track('Track C', 'Test C', '30.0');
 
         $this->entityManager->persist($track1);
         $this->entityManager->persist($track2);
@@ -75,10 +66,7 @@ class StatsControllerTest extends WebTestCase
 
     private function persistPlaybackLog(Track $track, string $amountPaid): void
     {
-        $log = new PlaybackLog();
-        $log->setTrack($track);
-        $log->setAmountPaid($amountPaid);
-        $log->setPlayedAt(new \DateTimeImmutable());
+        $log = new PlaybackLog($track, new \DateTimeImmutable(), $amountPaid);
 
         $this->entityManager->persist($log);
         $this->entityManager->flush();

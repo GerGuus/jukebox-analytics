@@ -15,10 +15,7 @@ class TrackServiceTest extends TestCase
         $trackId = 1;
         $newPrice = '15.99';
 
-        $track = new Track();
-        $track->setTitle('Track 1');
-        $track->setArtist('Artist 1');
-        $track->setPrice('10.00');
+        $track = new Track('Track 1', 'Artist 1', '10.00');
 
         $trackRepository = $this->createMock(TrackRepository::class);
         $entityManager = $this->createMock(EntityManagerInterface::class);

@@ -16,10 +16,7 @@ class PlaybackLogServiceTest extends TestCase
         $trackId = 1;
         $amountPaid = '12.50';
 
-        $track = new Track();
-        $track->setTitle('Test Track');
-        $track->setArtist('Test Artist');
-        $track->setPrice('10.00');
+        $track = new Track('Test Track', 'Test Artist', '10.00');
 
         $trackRepository = $this->createMock(TrackRepository::class);
         $playbackLogRepository = $this->createMock(PlaybackLogRepository::class);

@@ -25,10 +25,7 @@ class PlaybackLogControllerTest extends WebTestCase
 
     public function testCreatePlaybackLogSuccess(): void
     {
-        $track = new Track();
-        $track->setTitle('Test Track');
-        $track->setArtist('Test Artist');
-        $track->setPrice('12.50');
+        $track = new Track('Test Track', 'Test Artist', '12.50');
 
         $this->entityManager->persist($track);
         $this->entityManager->flush();
