@@ -1,11 +1,10 @@
-version: '3.9'
+name: jukebox-analytics
 
 services:
   php:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
-    container_name: jukebox_php
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
@@ -14,7 +13,6 @@ services:
 
   nginx:
     image: nginx:1.27-alpine
-    container_name: jukebox_nginx
     ports:
       - "8080:80"
     volumes:
@@ -25,14 +23,11 @@ services:
 
   db:
     image: postgres:16-alpine
-    container_name: jukebox_db
     restart: unless-stopped
     environment:
       POSTGRES_DB: jukebox
       POSTGRES_USER: jukebox
       POSTGRES_PASSWORD: jukebox
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
