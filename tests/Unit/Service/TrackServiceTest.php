@@ -5,12 +5,11 @@ namespace App\Tests\Unit\Service;
 use App\Entity\Track;
 use App\Repository\TrackRepository;
 use App\Service\TrackService;
-use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 
 class TrackServiceTest extends TestCase
 {
-    public function testUpdatePriceUpdatesTrackAndFlushes(): void
+    public function testUpdatePriceUpdatesTrackAndSaves(): void
     {
         $trackId = 1;
         $newPrice = '15.99';
@@ -18,7 +17,6 @@ class TrackServiceTest extends TestCase
         $track = new Track('Track 1', 'Artist 1', '10.00');
 
         $trackRepository = $this->createMock(TrackRepository::class);
-        $entityManager = $this->createMock(EntityManagerInterface::class);
 
         $trackRepository
             ->expects($this->once())
@@ -26,11 +24,12 @@ class TrackServiceTest extends TestCase
             ->with($trackId)
             ->willReturn($track);
 
-        $entityManager
+        $trackRepository
             ->expects($this->once())
-            ->method('flush');
+            ->method('save')
+            ->with($this->identicalTo($track), true);
 
-        $service = new TrackService($trackRepository, $entityManager);
+        $service = new TrackService($trackRepository);
 
         $result = $service->updatePrice($trackId, $newPrice);
 
@@ -41,7 +40,6 @@ class TrackServiceTest extends TestCase
     public function testUpdatePriceThrowsExceptionWhenTrackNotFound(): void
     {
         $trackRepository = $this->createMock(TrackRepository::class);
-        $entityManager = $this->createMock(EntityManagerInterface::class);
 
         $trackRepository
             ->expects($this->once())
@@ -49,11 +47,11 @@ class TrackServiceTest extends TestCase
             ->with(999)
             ->willReturn(null);
 
-        $entityManager
+        $trackRepository
             ->expects($this->never())
-            ->method('flush');
+            ->method('save');
 
-        $service = new TrackService($trackRepository, $entityManager);
+        $service = new TrackService($trackRepository);
 
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Track not found');

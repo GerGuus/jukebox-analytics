@@ -87,26 +87,4 @@ class Track
     {
         return $this->playbackLogs;
     }
-
-    public function addPlaybackLog(PlaybackLog $playbackLog): static
-    {
-        if (!$this->playbackLogs->contains($playbackLog)) {
-            $this->playbackLogs->add($playbackLog);
-            $playbackLog->setTrack($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlaybackLog(PlaybackLog $playbackLog): static
-    {
-        if ($this->playbackLogs->removeElement($playbackLog)) {
-            // set the owning side to null (unless already changed)
-            if ($playbackLog->getTrack() === $this) {
-                $playbackLog->setTrack(null);
-            }
-        }
-
-        return $this;
-    }
 }
